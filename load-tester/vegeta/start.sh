@@ -14,7 +14,7 @@ ENDPOINT="http://localhost:3001/user"
 
 
 # Check if Vegeta is installed
-if ! command -v vegeta &> /dev/null
+if ! command -v ./lib/vegeta &> /dev/null
 then
     echo "Vegeta could not be found, please install it."
     exit 1
@@ -32,11 +32,11 @@ done
 
 echo "Starting Vegeta attack for $DURATION at $RATE requests per second..."
 # Run the attack and save the results to a binary file
-vegeta attack -rate=$RATE -duration=$DURATION -targets="$TARGET_FILE" > "$RESULTS_FILE"
+./lib/vegeta attack -rate=$RATE -duration=$DURATION -targets="$TARGET_FILE" > "$RESULTS_FILE"
 
 echo "Load test finished, generating reports..."
 # Generate a textual report from the binary results file
-vegeta report -type=text "$RESULTS_FILE" > "$REPORT_FILE"
+./lib/vegeta report -type=text "$RESULTS_FILE" > "$REPORT_FILE"
 echo "Textual report generated: $REPORT_FILE"
 
 # Jump lines
